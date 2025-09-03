@@ -1,0 +1,99 @@
+.locationLabel {
+    color: var(--gray);
+    padding-bottom: 8px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+}
+
+.locationInput {
+    width: 100%;
+    padding: 20px 20px 20px 48px;
+    border: 1px solid var(--inputs);
+    border-radius: 12px;
+    outline: none;
+    height: 56px;
+    color: var(--main);
+    background-color: var(--inputs);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+}
+
+.locationInput::placeholder {
+    color: var(--gray);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+}
+
+.locationWrapper:has(.locationInput:focus) .locationIcon {
+    fill: var(--main);
+}
+
+.locationInput:focus::placeholder {
+    color: var(--main);
+}
+
+.locationWrapper {
+    position: relative;
+}
+
+.locationIcon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    fill: var(--gray);
+    transition: color .2s ease;
+    pointer-events: none;
+}
+
+.filtersSeparationText {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+.equipmentContainer {
+    margin-top: 32px;
+}
+
+.equipmentFilerContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.equipmentFilterItem {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--gray-light);
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    width: 112px;
+    height: 96px;
+    border-radius: 12px;
+    background-color: var(--white);
+}
+
+.active {
+    border-color: var(--button);
+}
