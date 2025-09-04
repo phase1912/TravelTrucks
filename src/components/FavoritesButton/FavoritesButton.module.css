@@ -1,0 +1,22 @@
+.favoritesButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.favoritesIcon {
+    fill: var(--main);
+    transition: fill 0.2s ease;
+}
+
+.favoritesButton:hover .favoritesIcon,
+.favoritesButton:focus .favoritesIcon {
+    fill: var(--button-hover);
+}
+
+.active .favoritesIcon {
+    fill: var(--button);
+}

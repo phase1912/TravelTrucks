@@ -4,13 +4,14 @@ import Loader from '@/components/Loader';
 import Gallery from '@/components/Gallery';
 import ReviewList from '@/components/ReviewList';
 import BookingForm from '@/components/BookingForm';
-import RatingStars from '@/components/RatingStars';
-import FavoritesButton from '@/components/FavoritesButton';
 import { MapPin } from '@/components/icons';
 import { formatPrice } from '@/utils/format';
 import Toast from '@/components/Toast';
 import { fetchCamperById } from '@/redux/camperOps';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import FavoritesButton from '@/components/FavoritesButton/FavoritesButton';
+import RatingStars from '@/components/RatingStars/RatingStars';
+import styles from './CamperDetails.module.css'
 
 export default function CamperDetails() {
     const { id } = useParams();
@@ -24,9 +25,9 @@ export default function CamperDetails() {
     if (!camper) return <div className="container" style={{ padding: '32px 0' }}><Loader/></div>;
 
     return (
-        <section className="container" style={{ padding: '32px 0 64px', display: 'grid', gap: 24 }}>
-            <Link to="/catalog" className="btn-outline">← Back to catalog</Link>
-            <div className="card" style={{ padding: 16 }}>
+        <section className={`container ${styles.camperDetailsSection}`}>
+            {/*<Link to="/catalog" className="btn-outline">← Back to catalog</Link>*/}
+            <div className={styles.detailsCard} style={{ padding: 16 }}>
                 <div className="row" style={{ justifyContent: 'space-between', alignItems: 'start' }}>
                     <div>
                         <h1 style={{ margin: '0 0 6px' }}>{camper.name}</h1>
@@ -41,9 +42,9 @@ export default function CamperDetails() {
                         <FavoritesButton id={camper.id}/>
                     </div>
                 </div>
-                <div className="separator"></div>
+                
                 <Gallery images={camper.gallery}/>
-                <div className="separator"></div>
+               
                 <p style={{ margin: 0, color: 'var(--muted)' }}>{camper.description}</p>
             </div>
 

@@ -1,10 +1,10 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import CamperDetails from '@/pages/CamperDetails';
 import NotFound from '@/pages/NotFound';
 import styles from './App.module.css';
 import spriteUrl from '../../img/icons.svg?url';
 import Home from '@/pages/Home/Home';
 import Catalog from '@/pages/Catalog/Catalog';
+import CamperDetails from '@/pages/CamperDetails/CamperDetails';
 
 export default function App() {
     return (

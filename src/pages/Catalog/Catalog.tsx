@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import CamperCard from '@/components/CamperCard';
 import Loader from '@/components/Loader';
 import Toast from '@/components/Toast';
 import {
@@ -13,6 +12,8 @@ import { fetchCampers } from '@/redux/camperOps';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import FilterPanel from '@/components/FilterPanel/FilterPanel';
 import styles from './Catalog.module.css';
+import CamperCard from '@/components/CamperCard/CamperCard';
+import Button from '@/components/Button/Button';
 
 export default function Catalog() {
     const dispatch = useAppDispatch();
@@ -39,15 +40,14 @@ export default function Catalog() {
     return (
         <section className={`container ${styles.catalogContainer}`}>
             <FilterPanel/>
-            <div style={{ display: 'grid', gap: 16 }}>
+            <div className={styles.cardsContainer}>
                 {campers.map(item => <CamperCard key={item.id} item={item}/>)}
                 {status === 'loading' ? <Loader/> : null}
                 {!campers.length && status === 'succeeded' ? <p>No campers found.</p> : null}
-
-                <button className="btn-outline" disabled={!hasMore || status === 'loading'}
-                        onClick={loadMore}>
-                    Load More
-                </button>
+                {hasMore && <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button className={styles.loadMoreButton} text={'Load More'} onClickHandler={loadMore}
+                            disabled={!hasMore || status === 'loading'}/>
+                </div>}
             </div>
             <Toast/>
         </section>

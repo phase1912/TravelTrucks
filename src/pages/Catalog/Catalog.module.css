@@ -1,6 +1,30 @@
 .catalogContainer {
-    display: grid;
-    grid-template-columns: 360px 1fr;
+    /*display: grid;*/
+    /*grid-template-columns: 360px 1fr;*/
+    display: flex;
+    justify-content: center;
     gap: 64px;
     padding: 48px 0 64px;
+}
+
+.cardsContainer {
+    /*display: grid;*/
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 888px;
+}
+
+.loadMoreButton {
+    width: 145px;
+    border-color: var(--gray-light);
+    color: var(--main);
+    background-color: var(--white);
+    margin-top: 8px;
+}
+
+.loadMoreButton:hover,
+.loadMoreButton:focus {
+    border-color: var(--button-hover);
+    background-color: var(--white);
 }

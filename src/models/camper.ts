@@ -6,7 +6,7 @@ export type Camper = {
     description?: string
     rating?: number
     reviews?: { reviewer_name: string; reviewer_email?: string; comment: string; rating: number; date?: string }[]
-    gallery?: string[]
+    gallery?: { thumb: string, original: string }[]
     // specs
     form?: string
     length?: string

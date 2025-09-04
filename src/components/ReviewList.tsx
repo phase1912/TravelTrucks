@@ -1,5 +1,5 @@
-import RatingStars from './RatingStars';
 import { Camper } from '@/models/camper';
+import RatingStars from '@/components/RatingStars/RatingStars';
 
 export default function ReviewList({ camper }: { camper: Camper }) {
     const reviews = camper.reviews ?? [];
