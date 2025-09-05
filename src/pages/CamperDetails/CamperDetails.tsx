@@ -85,7 +85,7 @@ export default function CamperDetails() {
                                     {camper.microwave &&
                                         <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'microwave'}
                                                      text={'Microwave'}/>}
-                                    {camper.gas && <FeatureItem iconName={'gas'} text={'Gas'}/>}
+                                    {camper.gas && <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'gas'} text={'Gas'}/>}
                                     {camper.water && <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'water'}
                                                                   text={'Water'}/>}
                                 </div>
