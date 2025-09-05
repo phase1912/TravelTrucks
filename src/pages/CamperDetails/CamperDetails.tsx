@@ -28,7 +28,6 @@ export default function CamperDetails() {
 
     return (
         <section className={`container ${styles.camperDetailsSection}`}>
-            {/*<Link to="/catalog" className="btn-outline">← Back to catalog</Link>*/}
             <div className={styles.detailsCard} style={{ padding: 16 }}>
                 <div className={styles.headerContainer}>
                     <h2 className={styles.cardHeader}>{camper.name}</h2>

@@ -10,10 +10,10 @@
 .favoritesIcon {
     fill: var(--main);
     transition: fill 0.2s ease;
+    cursor: pointer;
 }
 
-.favoritesButton:hover .favoritesIcon,
-.favoritesButton:focus .favoritesIcon {
+.favoritesButton:hover .favoritesIcon {
     fill: var(--button-hover);
 }
 

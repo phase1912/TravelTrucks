@@ -1,8 +1,5 @@
 
 :root {
-    --muted: #6b7280;
-    --primary: #1c7ed6;
-    --primary-600: #1864ab;
     --border: #e5e7eb;
     --card: #f8fafc;
     --success: #16a34a;
@@ -46,45 +43,6 @@ a {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 64px;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 18px;
-    border-radius: 999px;
-    background: var(--primary);
-    color: white;
-    border: 1px solid transparent;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform .1s ease, background .2s ease;
-}
-
-.btn:hover {
-    background: var(--primary-600);
-}
-
-.btn:active {
-    transform: translateY(1px);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
-}
-
-.btn-outline:hover {
-    background: rgba(28, 126, 214, .08);
-}
-
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
 }
 
 .input, .select {
@@ -168,8 +126,8 @@ a {
     position: fixed;
     right: 24px;
     bottom: 24px;
-    background: #111;
-    color: #fff;
+    background: var(--main);
+    color: var(--white);
     padding: 14px 18px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, .25);
