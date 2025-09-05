@@ -3,7 +3,7 @@ header.sticky {
     top: 0;
     z-index: 20;
     background-color: var(--inputs);
-    border: 1px solid var(--badges);
+    border: 1px solid var(--inputs);
 }
 
 .headerContainer {

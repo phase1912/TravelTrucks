@@ -92,7 +92,6 @@ export default function BookingForm({ camperName, className }: { camperName: str
                           onChange={e => setComment(e.target.value)}/>
                 <Button style={{ marginTop: 10 }} text={'Send'} type="submit" onClickHandler={() => {
                 }}/>
-                <p className="sr-only" aria-live="polite">Submitting booking form</p>
             </div>
         </form>
     );
