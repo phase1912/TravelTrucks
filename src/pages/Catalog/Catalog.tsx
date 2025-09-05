@@ -39,14 +39,13 @@ export default function Catalog() {
 
     return (
         <section className={`container ${styles.catalogContainer}`}>
-            <FilterPanel/>
+            {(status !== 'loading' || campers?.length > 0) && <FilterPanel/>}
             <div className={styles.cardsContainer}>
                 {campers.map(item => <CamperCard key={item.id} item={item}/>)}
                 {status === 'loading' ? <Loader/> : null}
-                {campers.length === 0 ? <p style={{ width: 888 }}>No campers found.</p> : null}
-                {hasMore && <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button className={styles.loadMoreButton} text={'Load More'} onClickHandler={loadMore}
-                            disabled={!hasMore || status === 'loading'}/>
+                {status !== 'loading' && campers.length === 0 ? <p style={{ width: 888 }}>No campers found.</p> : null}
+                {status !== 'loading' && hasMore && <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button className={styles.loadMoreButton} text={'Load More'} onClickHandler={loadMore}/>
                 </div>}
             </div>
             <Toast/>
