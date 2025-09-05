@@ -1,7 +1,7 @@
 import {
-    resetResults, selectCampersQuery,
+    resetResults,
 } from '@/redux/slices/campersSlice';
-import { setForm, setLocation, toggleFeature } from '@/redux/slices/filtersSlice';
+import { replaceFilters } from '@/redux/slices/filtersSlice';
 import { fetchCampers } from '@/redux/camperOps';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import styles from './FilterPanel.module.css';
@@ -9,17 +9,42 @@ import spriteUrl from '../../img/icons.svg?url';
 import Button from '@/components/Button/Button';
 import { CustomSvg } from '@/components/CustomSvg/CustomSvg';
 import { icons, formsMapping, FeatureKey, FormKey } from '@/constants';
+import { useEffect, useState } from 'react';
+import { Filters } from '@/models/filter';
+import { toQuery } from '@/utils/helpers';
 
 export default function FilterPanel() {
-    const filters = useAppSelector(s => s.filters);
+    const appliedFilters = useAppSelector(s => s.filters);
     const dispatch = useAppDispatch();
-    const query = useAppSelector(selectCampersQuery);
-    
+    const [draft, setDraft] = useState(appliedFilters);
+    type FeatureToggleKey = keyof Filters['features'];
+
+    useEffect(() => {
+        setDraft(appliedFilters);
+    }, [appliedFilters]);
+
     function apply() {
+        const query = toQuery(draft);
         dispatch(resetResults());
+        dispatch(replaceFilters(draft));
         dispatch(fetchCampers({ ...query, page: 1, limit: 4 }));
     }
 
+
+    const onToggleFeature = (k: FeatureToggleKey) => {
+        setDraft(prev => {
+            const nextVal = !prev.features[k];
+            const next: Filters = {
+                ...prev,
+                features: { ...prev.features, [k]: nextVal },
+            };
+            
+            if (k === 'automatic') {
+                next.transmission = nextVal ? 'automatic' : '';
+            }
+            return next;
+        });
+    };
 
     return (
         <aside style={{ maxWidth: 360 }}>
@@ -28,8 +53,8 @@ export default function FilterPanel() {
                 <div className={styles.locationWrapper}>
                     <CustomSvg className={styles.locationIcon} width={20} height={20}
                                spriteUrl={`${spriteUrl}#icon-map`}/>
-                    <input className={styles.locationInput} placeholder="City" value={filters.location}
-                           onChange={e => dispatch(setLocation(e.target.value))}/>
+                    <input className={styles.locationInput} placeholder="City" value={draft.location}
+                           onChange={e => setDraft(prev => ({ ...prev, location: e.target.value }))}/>
                 </div>
             </div>
 
@@ -39,11 +64,11 @@ export default function FilterPanel() {
                 <h1>Vehicle equipment</h1>
                 <div className="separator"></div>
                 <div className={styles.equipmentFilerContainer}>
-                    {Object.keys(filters.features).map(k => {
+                    {Object.keys(draft.features).map(k => {
                         const iconId = icons[k as FeatureKey] ?? 'icon-wind';
                         return (<button key={k}
-                                        className={`${styles.equipmentFilterItem} ${(filters.features as any)[k] ? styles.active : ''}`}
-                                        onClick={() => dispatch(toggleFeature(k as any))}>
+                                        className={`${styles.equipmentFilterItem} ${(draft.features as any)[k] ? styles.active : ''}`}
+                                        onClick={() => onToggleFeature(k as FeatureToggleKey)}>
                             <CustomSvg label={'Features'} width={32} height={32} spriteUrl={`${spriteUrl}#${iconId}`}/>
                             <span style={{ textTransform: 'capitalize' }}>{k}</span>
                         </button>);
@@ -60,8 +85,8 @@ export default function FilterPanel() {
                         const iconId = icons[k as FeatureKey] ?? 'icon-wind';
                         const form = formsMapping[k as FormKey] ?? 'alcove';
                         return (<button key={k}
-                                        className={`${styles.equipmentFilterItem} ${filters.form == k ? styles.active : ''}`}
-                                        onClick={() => dispatch(setForm(k))}>
+                                        className={`${styles.equipmentFilterItem} ${draft.form == k ? styles.active : ''}`}
+                                        onClick={() => setDraft(prev => ({ ...prev, form: k }))}>
                             <CustomSvg label={'Features'} width={32} height={32} spriteUrl={`${spriteUrl}#${iconId}`}/>
                             <span style={{ textTransform: 'capitalize' }}>{form}</span>
                         </button>);

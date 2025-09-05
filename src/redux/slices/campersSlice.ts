@@ -49,16 +49,16 @@ const slice = createSlice({
                     s.items.push(...newItems);
                 }
 
-                s.hasMore = newItems.length > 0;
+                s.hasMore = s.items.length < a.payload.total;
                 s.status = 'succeeded';
                 s.lastQueryKey = queryKey;
                 s.lastPage = page;
                 s.totalItems = a.payload.total;
             })
             .addCase(fetchCampers.rejected, (s, a) => {
-                //if (a.meta.requestId !== s.activeRequestId) return
                 s.status = 'failed';
                 s.error = a.error.message;
+                s.hasMore = false;
             })
             .addCase(fetchCamperById.pending, (s) => {
                 s.selected = undefined;
@@ -84,14 +84,6 @@ export const selectTotalItems = (s: RootState) => s.campers.totalItems;
 
 export const selectCampersQuery = createSelector(
     [selectFilters],
-    (filters) => toQuery(filters) // recomputes only when filters object changes
+    (filters) => toQuery(filters)
 );
-
-// 2) (Optional) Client-side filtered list, if you ever need it:
-// export const selectFilteredCampers = createSelector(
-//     [selectCampersItems, selectFilters, selectCampersPage],
-//     (items, f) => {
-//         return items;
-//     }
-// )
 

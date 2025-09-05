@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Filters } from '@/models/filter';
 import { RootState } from '../store';
 
-
 const initial: Filters = {
     location: '',
     form: '',
@@ -34,11 +33,14 @@ const filtersSlice = createSlice({
         },
         resetFilters() {
             return initial;
-        }
+        },
+        replaceFilters(_state, action: PayloadAction<Filters>) {
+            return action.payload;
+        },
     }
 });
 
-export const { setLocation, setForm, setTransmission, toggleFeature, resetFilters } = filtersSlice.actions;
+export const { setLocation, setForm, setTransmission, toggleFeature, resetFilters, replaceFilters } = filtersSlice.actions;
 export default filtersSlice.reducer;
 
 export const selectFilters = (s: RootState) => s.filters;

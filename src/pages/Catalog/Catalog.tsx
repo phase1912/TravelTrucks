@@ -43,7 +43,7 @@ export default function Catalog() {
             <div className={styles.cardsContainer}>
                 {campers.map(item => <CamperCard key={item.id} item={item}/>)}
                 {status === 'loading' ? <Loader/> : null}
-                {!campers.length && status === 'succeeded' ? <p>No campers found.</p> : null}
+                {campers.length === 0 ? <p style={{ width: 888 }}>No campers found.</p> : null}
                 {hasMore && <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button className={styles.loadMoreButton} text={'Load More'} onClickHandler={loadMore}
                             disabled={!hasMore || status === 'loading'}/>
