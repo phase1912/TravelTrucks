@@ -1,0 +1,38 @@
+.reviewContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 631px;
+    gap: 44px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--badges);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--button);
+}
+
+.avatarText {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: var(--main);
+}
+
+.text {
+    color: var(--text);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    margin: 0;
+}

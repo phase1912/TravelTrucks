@@ -179,3 +179,94 @@ nav a.active {
     color: var(--button-hover);
     font-weight: 700;
 }
+
+
+.myDatepicker {
+    border: 1px solid var(--text) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    background: #fff;
+    overflow: hidden;
+    font-family: Inter, sans-serif !important;
+}
+
+.myDatepicker .react-datepicker__header {
+    background: var(--white);
+    border-bottom: 1px solid var(--text);
+    padding: 8px 12px;
+}
+
+.myDatepicker .react-datepicker__current-month { font-weight: 600; }
+
+.myDatepicker .react-datepicker__day-names {
+    /*display: grid;*/
+    /*grid-template-columns: repeat(7, 1fr);*/
+    /*padding: 4px 8px;*/
+    /*color: var(--main);*/
+    display: none;
+}
+
+.myDatepicker .react-datepicker__month { padding: 8px 12px 12px; }
+
+.myDatepicker .react-datepicker__day {
+    width: 36px; height: 32px; line-height: 36px;
+    margin: 2px; border-radius: 999px;
+}
+
+.myDatepicker .react-datepicker__day--selected,
+.myDatepicker .react-datepicker__day--keyboard-selected {
+    background: var(--text);
+    color: var(--white);
+}
+
+.myDatepicker .dp-header {
+    position: relative;
+    padding: 12px 12px 8px;
+    background: var(--white);
+}
+
+.myDatepicker .dp-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0 48px;
+}
+
+.myDatepicker .dp-nav {
+    position: absolute;
+    top: 10px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 32px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.myDatepicker .dp-nav[disabled] {
+    opacity: .4;
+    cursor: default;
+}
+
+.myDatepicker .dp-nav:first-of-type { left: 8px; }
+.myDatepicker .dp-nav:last-of-type  { right: 8px; }
+
+.myDatepicker .dp-weekdays {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    padding: 0 6px 6px;
+}
+
+.myDatepicker .dp-weekday {
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: .02em;
+    font-size: 14px;
+    color: var(--text);
+}
+

@@ -11,8 +11,8 @@ export function RatingLocation({ rating, reviewsLength, location }: {
     return (
         <div className={styles.ratingLocationContainer}>
             <div className={styles.ratingContainer}>
-                <span>{`${rating} (${reviewsLength} Reviews)`}</span>
                 <RatingStars value={rating} count={1}/>
+                <span>{`${rating} (${reviewsLength} Reviews)`}</span>
             </div>
             <span className={styles.locationContainer}><CustomSvg width={16} height={16}
                                                                   spriteUrl={`${spriteUrl}#icon-map`}/>{location}</span>

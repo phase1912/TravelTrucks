@@ -1,20 +1,22 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Loader from '@/components/Loader';
-import Gallery from '@/components/Gallery';
-import ReviewList from '@/components/ReviewList';
-import BookingForm from '@/components/BookingForm';
-import { MapPin } from '@/components/icons';
-import { formatPrice } from '@/utils/format';
+import { formatPrice, formatValueWithSpace } from '@/utils/format';
 import Toast from '@/components/Toast';
 import { fetchCamperById } from '@/redux/camperOps';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import FavoritesButton from '@/components/FavoritesButton/FavoritesButton';
-import RatingStars from '@/components/RatingStars/RatingStars';
-import styles from './CamperDetails.module.css'
+import styles from './CamperDetails.module.css';
+import { RatingLocation } from '@/components/RatingLocation/RatingLocation';
+import Gallery from '@/components/Gallery/Gallery';
+import { FeatureItem } from '@/components/FeatureItem/FeatureItem';
+import { FeatureKey } from '@/constants';
+import { capitalizeFirstWord } from '@/utils/helpers';
+import ReviewList from '@/components/ReviewList/ReviewList';
+import BookingForm from '@/components/BookingForm/BookingForm';
 
 export default function CamperDetails() {
     const { id } = useParams();
+    const [tab, setTab] = useState<'features' | 'reviews'>('features');
     const dispatch = useAppDispatch();
     const camper = useAppSelector(s => s.campers.selected);
 
@@ -28,56 +30,92 @@ export default function CamperDetails() {
         <section className={`container ${styles.camperDetailsSection}`}>
             {/*<Link to="/catalog" className="btn-outline">← Back to catalog</Link>*/}
             <div className={styles.detailsCard} style={{ padding: 16 }}>
-                <div className="row" style={{ justifyContent: 'space-between', alignItems: 'start' }}>
-                    <div>
-                        <h1 style={{ margin: '0 0 6px' }}>{camper.name}</h1>
-                        <div className="row" style={{ gap: 8, color: 'var(--muted)' }}>
-                            <RatingStars value={camper.rating ?? 0}/>
-                            <span>•</span>
-                            <span className="row"><MapPin/> {camper.location}</span>
-                        </div>
-                    </div>
-                    <div className="row" style={{ gap: 12, alignItems: 'center' }}>
-                        <div style={{ fontWeight: 700, fontSize: 18 }}>{formatPrice(camper.price)} €</div>
-                        <FavoritesButton id={camper.id}/>
-                    </div>
+                <div className={styles.headerContainer}>
+                    <h2 className={styles.cardHeader}>{camper.name}</h2>
+                    <RatingLocation rating={camper.rating} location={camper.location}
+                                    reviewsLength={camper.reviews?.length}/>
+                    <h2 className={styles.cardHeader}>€ {formatPrice(camper.price)}</h2>
                 </div>
-                
+
                 <Gallery images={camper.gallery}/>
-               
-                <p style={{ margin: 0, color: 'var(--muted)' }}>{camper.description}</p>
+
+                <p className={styles.descriptionText}>{camper.description}</p>
             </div>
 
-            <div className="grid" style={{ gridTemplateColumns: '1fr 360px', gap: 24 }}>
-                <div className="card" style={{ padding: 16 }}>
-                    <h3>Vehicle details</h3>
-                    <div className="grid grid-2" style={{ marginTop: 12 }}>
-                        <Detail label="Form" value={camper.form}/>
-                        <Detail label="Transmission" value={camper.transmission}/>
-                        <Detail label="Engine" value={camper.engine}/>
-                        <Detail label="Length" value={camper.length}/>
-                        <Detail label="Width" value={camper.width}/>
-                        <Detail label="Height" value={camper.height}/>
-                        <Detail label="Tank" value={camper.tank}/>
-                        <Detail label="Consumption" value={camper.consumption}/>
-                        <Detail label="AC" value={camper.AC ? 'Yes' : 'No'}/>
-                        <Detail label="Bathroom" value={camper.bathroom ? 'Yes' : 'No'}/>
-                        <Detail label="Kitchen" value={camper.kitchen ? 'Yes' : 'No'}/>
-                        <Detail label="TV" value={camper.TV ? 'Yes' : 'No'}/>
-                        <Detail label="Radio" value={camper.radio ? 'Yes' : 'No'}/>
-                        <Detail label="Refrigerator" value={camper.refrigerator ? 'Yes' : 'No'}/>
-                        <Detail label="Microwave" value={camper.microwave ? 'Yes' : 'No'}/>
-                        <Detail label="Gas" value={camper.gas ? 'Yes' : 'No'}/>
-                        <Detail label="Water" value={camper.water ? 'Yes' : 'No'}/>
-                    </div>
-
-                    <div className="separator"></div>
-                    <h3>Reviews</h3>
-                    <ReviewList camper={camper}/>
+            <div className={styles.tabsContainer}>
+                <div className={styles.tabsBar} role="tablist" aria-label="Camper details">
+                    <button
+                        role="tab"
+                        aria-selected={tab === 'features'}
+                        className={`${styles.tab} ${tab === 'features' ? styles.tabActive : ''}`}
+                        onClick={() => setTab('features')}
+                    >
+                        Features
+                    </button>
+                    <button
+                        role="tab"
+                        aria-selected={tab === 'reviews'}
+                        className={`${styles.tab} ${tab === 'reviews' ? styles.tabActive : ''}`}
+                        onClick={() => setTab('reviews')}
+                    >
+                        Reviews
+                    </button>
                 </div>
 
-                <BookingForm camperName={camper.name}/>
+                <div className="separator"></div>
+
+                <div className={styles.twoCol}>
+                    <>
+                        {tab === 'features' ? (
+                            <div className={styles.featuresCardContainer}>
+                                <div className={styles.featureChips}>
+                                    {camper.transmission && <FeatureItem text={camper.transmission}
+                                                                         iconName={camper.transmission as FeatureKey}/>}
+                                    {camper.AC && <FeatureItem text={'AC'} iconName={'AC'}/>}
+                                    {camper.engine &&
+                                        <FeatureItem text={camper.engine} iconName={camper.engine as FeatureKey}/>}
+                                    {camper.kitchen && <FeatureItem text={'Kitchen'} iconName={'kitchen'}/>}
+                                    {camper.radio && <FeatureItem text={'Radio'} iconName={'radio'}/>}
+
+                                    {camper.bathroom && <FeatureItem text={'Bathroom'} iconName={'bathroom'}/>}
+                                    {camper.TV && <FeatureItem text={'TV'} iconName={'TV'}/>}
+                                    {camper.form &&
+                                        <FeatureItem text={camper.form} iconName={camper.form as FeatureKey}/>}
+                                    {camper.refrigerator &&
+                                        <FeatureItem iconName={'refrigerator'} text={'Refrigerator'}/>}
+                                    {camper.microwave &&
+                                        <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'microwave'}
+                                                     text={'Microwave'}/>}
+                                    {camper.gas && <FeatureItem iconName={'gas'} text={'Gas'}/>}
+                                    {camper.water && <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'water'}
+                                                                  text={'Water'}/>}
+                                </div>
+
+                                <div className={styles.detailsBox}>
+                                    <h3 className={styles.detailBoxHeader}>Vehicle details</h3>
+                                    <div className="separator"></div>
+                                    <div className={styles.detailBoxContainer}>
+                                        <Detail label="Form" value={camper.form}/>
+                                        <Detail label="Length" value={camper.length}/>
+                                        <Detail label="Width" value={camper.width}/>
+                                        <Detail label="Height" value={camper.height}/>
+                                        <Detail label="Tank" value={camper.tank}/>
+                                        <Detail label="Consumption" value={camper.consumption}/>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <h3 className={styles.visuallyHidden}>Reviews</h3>
+                                <ReviewList camper={camper}/>
+                            </>
+                        )}
+                    </>
+
+                    <BookingForm className={styles.bookingFormContainer} camperName={camper.name}/>
+                </div>
             </div>
+
             <Toast/>
         </section>
     );
@@ -86,9 +124,9 @@ export default function CamperDetails() {
 function Detail({ label, value }: { label: string, value?: string }) {
     if (!value) return null;
     return (
-        <div style={{ display: 'grid', gap: 6 }}>
-            <span style={{ color: 'var(--muted)' }}>{label}</span>
-            <strong>{value}</strong>
+        <div style={{ display: 'flex', justifyContent: 'space-between', height: 24 }}>
+            <span style={{ color: 'var(--main)' }}>{label}</span>
+            <span>{capitalizeFirstWord(formatValueWithSpace(value))}</span>
         </div>
     );
 }
