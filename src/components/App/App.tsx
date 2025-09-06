@@ -1,12 +1,15 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import NotFound from '@/pages/NotFound';
 import styles from './App.module.css';
 import spriteUrl from '../../img/icons.svg?url';
-import Home from '@/pages/Home/Home';
-import Catalog from '@/pages/Catalog/Catalog';
-import CamperDetails from '@/pages/CamperDetails/CamperDetails';
+import { lazy, Suspense } from 'react';
+import Loader from '@/components/Loader';
 
 export default function App() {
+    const Home = lazy(() => import('@/pages/Home/Home'));
+    const Catalog = lazy(() => import('@/pages/Catalog/Catalog'));
+    const CamperDetails = lazy(() => import('@/pages/CamperDetails/CamperDetails'));
+    const NotFoundPage = lazy(() => import('@/pages/NotFound'));
+
     return (
         <div>
             <header className={styles.sticky}>
@@ -23,12 +26,14 @@ export default function App() {
                 </div>
             </header>
             <main>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/catalog" element={<Catalog/>}/>
-                    <Route path="/catalog/:id" element={<CamperDetails/>}/>
-                    <Route path="*" element={<NotFound/>}/>
-                </Routes>
+                <Suspense fallback={<Loader/>}>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/catalog" element={<Catalog/>}/>
+                        <Route path="/catalog/:id" element={<CamperDetails/>}/>
+                        <Route path="*" element={<NotFoundPage/>}/>
+                    </Routes>
+                </Suspense>
             </main>
         </div>
     );
