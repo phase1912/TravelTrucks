@@ -67,7 +67,7 @@ export default function CamperDetails() {
                     <>
                         {tab === 'features' ? (
                             <div className={styles.featuresCardContainer}>
-                                <div className={styles.featureChips}>
+                                <ul className={styles.featureChips}>
                                     {camper.transmission && <FeatureItem text={camper.transmission}
                                                                          iconName={camper.transmission as FeatureKey}/>}
                                     {camper.AC && <FeatureItem text={'AC'} iconName={'AC'}/>}
@@ -88,19 +88,19 @@ export default function CamperDetails() {
                                     {camper.gas && <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'gas'} text={'Gas'}/>}
                                     {camper.water && <FeatureItem svgStyle={{ stroke: '#FFFFFF' }} iconName={'water'}
                                                                   text={'Water'}/>}
-                                </div>
+                                </ul>
 
                                 <div className={styles.detailsBox}>
                                     <h3 className={styles.detailBoxHeader}>Vehicle details</h3>
                                     <div className="separator"></div>
-                                    <div className={styles.detailBoxContainer}>
+                                    <ul className={styles.detailBoxContainer}>
                                         <Detail label="Form" value={camper.form}/>
                                         <Detail label="Length" value={camper.length}/>
                                         <Detail label="Width" value={camper.width}/>
                                         <Detail label="Height" value={camper.height}/>
                                         <Detail label="Tank" value={camper.tank}/>
                                         <Detail label="Consumption" value={camper.consumption}/>
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
                         ) : (
@@ -123,9 +123,9 @@ export default function CamperDetails() {
 function Detail({ label, value }: { label: string, value?: string }) {
     if (!value) return null;
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', height: 24 }}>
+        <li style={{ display: 'flex', justifyContent: 'space-between', height: 24 }}>
             <span style={{ color: 'var(--main)' }}>{label}</span>
             <span>{capitalizeFirstWord(formatValueWithSpace(value))}</span>
-        </div>
+        </li>
     );
 }

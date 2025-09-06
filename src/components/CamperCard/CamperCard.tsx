@@ -33,7 +33,7 @@ export default function CamperCard({ item }: { item: Camper }) {
                     {item.description ?? ''}
                 </p>
 
-                <div className={styles.cardFeaturesWrapper}>
+                <ul className={styles.cardFeaturesWrapper}>
                     {joinTruthy([item.transmission === 'manual' ? undefined : item.transmission, item.engine, item.form]).split(' · ').filter(Boolean).map((t, i) => (
                         <FeatureItem key={i} text={t} iconName={t as FeatureKey}/>
                     ))}
@@ -42,7 +42,7 @@ export default function CamperCard({ item }: { item: Camper }) {
                     {item.bathroom ? <FeatureItem text={'Bathroom'} iconName={'bathroom'}/> : null}
                     {item.AC ? <FeatureItem text={'AC'} iconName={'AC'}/> : null}
 
-                </div>
+                </ul>
 
                 <Button text={'Show more'} onClickHandler={() => navigate(`/catalog/${item.id}`)}/>
             </div>

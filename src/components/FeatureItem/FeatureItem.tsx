@@ -11,7 +11,7 @@ export function FeatureItem({ text, iconName, style, svgStyle }: {
     svgStyle?: any,
 }) {
     return (
-        <span style={style} className={styles.cardFeature}><CustomSvg width={20} height={20} style={svgStyle}
-                                                                      spriteUrl={`${spriteUrl}#${icons[iconName]}`}/>{text}</span>
+        <li style={style} className={styles.cardFeature}><CustomSvg width={20} height={20} style={svgStyle}
+                                                                      spriteUrl={`${spriteUrl}#${icons[iconName]}`}/>{text}</li>
     );
 }
