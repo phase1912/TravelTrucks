@@ -4,7 +4,7 @@ import spriteUrl from '../../img/icons.svg?url';
 import { lazy, Suspense } from 'react';
 import Loader from '@/components/Loader';
 
-export default function App() {
+export default function App() { // TODO - refactor this 
     const Home = lazy(() => import('@/pages/Home/Home'));
     const Catalog = lazy(() => import('@/pages/Catalog/Catalog'));
     const CamperDetails = lazy(() => import('@/pages/CamperDetails/CamperDetails'));
