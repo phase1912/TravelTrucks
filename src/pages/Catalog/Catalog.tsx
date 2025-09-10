@@ -50,5 +50,5 @@ export default function Catalog() {
             </div>
             <Toast/>
         </section>
-    );
+    ); // TODO transform this list using ul tag and li tags
 }
